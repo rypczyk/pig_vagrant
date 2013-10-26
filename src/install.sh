@@ -16,8 +16,8 @@ function set_locale(){
 		else
 			echo "Locale ustawione"
 	fi
-	info Ustawiam locale na pl_PL.UTF-8
-	export LC_ALL=pl_PL.UTF-8
+	#info Ustawiam locale na pl_PL.UTF-8
+	#export LC_ALL=pl_PL.UTF-8
 }
 
 function fix_box(){
@@ -111,5 +111,5 @@ info Instaluje wymagane pakiety
 
 apt-get -t wheezy-backports install git
 apt-get install -y nginx redis-server postgresql-9.3
-
-src/install_nginex.sh
+info Instalacja nginx w nowszej wersji
+src/install_nginx.sh
