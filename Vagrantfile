@@ -5,7 +5,7 @@ $script = <<SCRIPT
 apt-get update
 apt-get --force-yes -y install git
 cd /tmp
-git clone https://github.com/rypczyk/pig_varant.git
+git clone https://github.com/rypczyk/pig_vagrant.git
 cd /tmp/pig_varant
 src/install.sh
 SCRIPT
