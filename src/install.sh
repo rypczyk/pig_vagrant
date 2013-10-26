@@ -1,8 +1,12 @@
 #!/bin/bash
 DEBIAN_VERSION=0
-
+function info(){
+	echo "========="
+	echo $*
+	echo "========="
+}
 function set_locale(){
-	echo "Sprawdzam locale"
+	info "Sprawdzam i konfiguruje locale"
 	grep -q '^pl_PL.UTF-8' /etc/locale.gen
 
 	if [ $? -ne 0 ]
@@ -12,6 +16,8 @@ function set_locale(){
 		else
 			echo "Locale ustawione"
 	fi
+	info Ustawiam locale na pl_PL.UTF-8
+	export LC_ALL=pl_PL.UTF-8
 }
 
 function get_debian_version(){
@@ -19,6 +25,7 @@ function get_debian_version(){
 }
 
 function set_debian_repos(){
+  info "Konfiguruje podstawowe repozytoria"
   if [ "$1" = '' ]
     then
       DV=$DEBIAN_VERSION
@@ -60,8 +67,8 @@ deb-src http://security.debian.org/ wheezy/updates main
 # wheezy-updates, previously known as "volatile"
 deb http://ftp.pl.debian.org/debian/ wheezy-updates main 
 deb-src http://ftp.pl.debian.org/debian/ wheezy-updates main
-' /tmp/$$repo;;
-    *) echo "Nie wspierana wersja Debiana: $DV"
+' > /tmp/$$repo;;
+    *) info "Nie wspierana wersja Debiana: $DV"
       return 1;;
   esac
   mv /tmp/$$repo /etc/apt/sources.list
@@ -69,12 +76,12 @@ deb-src http://ftp.pl.debian.org/debian/ wheezy-updates main
 }
 
 function install_postgresql_repos(){
-	echo "Konfiguruję apt dla postgresql 9.3"
+	info "Konfiguruję apt dla postgresql 9.3"
 	src/apt.postgresql.org.sh
 }
 
 function set_pig_repos(){
-	echo "Instaluję repozytoria dla pig"
+	info "Instaluję repozytoria dla pig"
 	echo '
 deb http://packages.dotdeb.org wheezy-php55 all
 deb-src http://packages.dotdeb.org wheezy-php55 all
@@ -93,5 +100,7 @@ set_pig_repos
 
 apt-get update
 export DEBIAN_FRONTEND=noninteractive
+info Instaluje wymagane pakiety
+apt-get -t squeeze-backports install git
 apt-get install -y nginx redis-server postgresql-9.3
 
