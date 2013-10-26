@@ -20,6 +20,11 @@ function set_locale(){
 	export LC_ALL=pl_PL.UTF-8
 }
 
+function fix_box(){
+  test -f /etc/apt/preferences && rm /etc/apt/preferences
+  test -f /etc/apt/sources.list.d/grml.list && rm /etc/apt/sources.list.d/grml.list
+}
+
 function get_debian_version(){
   DEBIAN_VERSION=$(cat /etc/issue|tr ' ' '\n'|grep '[0-9]')
 }
@@ -67,13 +72,14 @@ deb-src http://security.debian.org/ wheezy/updates main
 # wheezy-updates, previously known as "volatile"
 deb http://ftp.pl.debian.org/debian/ wheezy-updates main 
 deb-src http://ftp.pl.debian.org/debian/ wheezy-updates main
+# wheezy-backports
+deb http://ftp.pl.debian.org/debian/ wheezy-backports main 
+deb-src http://ftp.pl.debian.org/debian/ wheezy-backports main
 ' > /tmp/$$repo;;
     *) info "Nie wspierana wersja Debiana: $DV"
       return 1;;
   esac
   mv /tmp/$$repo /etc/apt/sources.list
-  test -f /etc/apt/preferences && rm /etc/apt/preferences
-  test -f /etc/apt/sources.list.d/grml.list && rm /etc/apt/sources.list.d/grml.list
 }
 
 function install_postgresql_repos(){
@@ -93,7 +99,7 @@ deb-src http://packages.dotdeb.org wheezy-php55 all
 	install_postgresql_repos
 }
 
-
+fix_box
 set_locale
 get_debian_version
 set_debian_repos
@@ -102,6 +108,8 @@ set_pig_repos
 apt-get update
 export DEBIAN_FRONTEND=noninteractive
 info Instaluje wymagane pakiety
-apt-get -t squeeze-backports install git
+
+apt-get -t wheezy-backports install git
 apt-get install -y nginx redis-server postgresql-9.3
 
+src/install_nginex.sh
