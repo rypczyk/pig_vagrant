@@ -3,7 +3,7 @@
 
 $script = <<SCRIPT
 apt-get update
-apt-get install git
+apt-get --force-yes -y install git
 cd /tmp
 git clone https://github.com/rypczyk/pig_varant.git
 cd /tmp/pig_varant
@@ -20,7 +20,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # please see the online documentation at vagrantup.com.
 
   # Every Vagrant virtual environment requires a box to build off of.
-  config.vm.box = "debian_squeeze_32"
+  config.vm.box = "debian_wheezy_32"
 
   # The url from where the 'config.vm.box' box will be fetched if it
   # doesn't already exist on the user's system.
