@@ -72,7 +72,8 @@ deb-src http://ftp.pl.debian.org/debian/ wheezy-updates main
       return 1;;
   esac
   mv /tmp/$$repo /etc/apt/sources.list
-  rm /etc/apt/preferences
+  test -f /etc/apt/preferences && rm /etc/apt/preferences
+  test -f /etc/apt/sources.list.d/grml.list && rm /etc/apt/sources.list.d/grml.list
 }
 
 function install_postgresql_repos(){
