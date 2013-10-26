@@ -67,9 +67,18 @@ deb-src http://ftp.pl.debian.org/debian/ wheezy-updates main
   mv /tmp/$$repo /etc/apt/sources.list
 }
 
+function set_pig_repos(){
+	echo '
+deb http://apt.postgresql.org/pub/repos/apt/ squeeze-pgdg main
+' > /etc/apt/sources.list.d/pigprint.list
+	wget -O - http://apt.postgresql.org/pub/repos/apt/ACCC4CF8.asc | sudo apt-key add -
+}
+
+
 set_locale
 get_debian_version
 set_debian_repos
+set_pig_repos
 
 apt-get update
 export DEBIAN_FRONTEND=noninteractive
