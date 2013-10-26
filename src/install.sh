@@ -73,5 +73,5 @@ set_debian_repos
 
 apt-get update
 export DEBIAN_FRONTEND=noninteractive
-apt-get install -y nginx redis
+apt-get install -y nginx redis-server
 
