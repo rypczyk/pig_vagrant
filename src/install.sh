@@ -65,13 +65,24 @@ deb-src http://ftp.pl.debian.org/debian/ wheezy-updates main
       return 1;;
   esac
   mv /tmp/$$repo /etc/apt/sources.list
+  rm /etc/apt/preferences
+}
+
+function install_postgresql_repos(){
+	echo "Konfiguruję apt dla postgresql 9.3"
+	src/apt.postgresql.org.sh
 }
 
 function set_pig_repos(){
+	echo "Instaluję repozytoria dla pig"
 	echo '
-deb http://apt.postgresql.org/pub/repos/apt/ wheezy-pgdg main
+deb http://packages.dotdeb.org wheezy-php55 all
+deb-src http://packages.dotdeb.org wheezy-php55 all
 ' > /etc/apt/sources.list.d/pigprint.list
-	wget -O - http://apt.postgresql.org/pub/repos/apt/ACCC4CF8.asc | sudo apt-key add -
+	gpg --keyserver keys.gnupg.net --recv-key 89DF5277
+	gpg -a --export 89DF5277 | sudo apt-key add -
+	# Postgresql
+	install_postgresql_repos
 }
 
 
@@ -82,5 +93,5 @@ set_pig_repos
 
 apt-get update
 export DEBIAN_FRONTEND=noninteractive
-apt-get install -y nginx redis-server
+apt-get install -y nginx redis-server postgresql-9.3
 
