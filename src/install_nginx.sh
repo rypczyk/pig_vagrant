@@ -14,6 +14,8 @@ if [ $? -ne 0 ]
 		cd debian/modules
 		git clone https://github.com/pagespeed/ngx_pagespeed.git
 		cd ngx_pagespeed
+
+		# tego wymaga ngx_pagespeed i bez tego sie nie kompiluje.... 
 		wget https://dl.google.com/dl/page-speed/psol/1.6.29.5.tar.gz
 		tar -xzf 1.6.29.5.tar.gz
 		cd ../../../
@@ -25,5 +27,4 @@ fi
 cd $CACHE
 dpkg -i nginx-common_1*.deb nginx_1*.deb nginx-full_1*.deb
 mkdir -p /var/ngx_pagespeed_cache
-chown -R www-data:www-data /var/ngx_pagespeed_cache
-
+chown www-data:www-data /var/ngx_pagespeed_cache

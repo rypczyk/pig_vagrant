@@ -88,10 +88,10 @@ function install_postgresql_repos(){
 	src/apt.postgresql.org.sh
 }
 
-function set_pig_repos(){
-	info "Instaluję repozytoria dla pig"
+function set_php_repos(){
 	if [ "$PHP" = '5.5' ]	
 		then	
+			info "Instaluję repozytoria dla php"
 			echo '
 deb http://packages.dotdeb.org wheezy-php55 all
 deb-src http://packages.dotdeb.org wheezy-php55 all
@@ -99,28 +99,67 @@ deb-src http://packages.dotdeb.org wheezy-php55 all
 			gpg --keyserver keys.gnupg.net --recv-key 89DF5277
 			gpg -a --export 89DF5277 | sudo apt-key add -
 	fi
-	# Postgresql
+}
+
+function install_postgresql(){
+	info Instaluje postgresql 9.3
+	apt-get install -y postgresql-9.3 	
+}
+
+function install_redis(){
+	info Instaluje redis
+	apt-get install -y redis-server 
+}
+
+function set_repos(){
+	info Ustawiam repozytoria
+	get_debian_version
+	set_debian_repos
+	set_php_repos
 	install_postgresql_repos
+	apt-get update
+}
+
+function install_tools(){
+	info Instalacja narzedzi dodatkowych
+	apt-get -y -t wheezy-backports install git
+	apt-get install -y tcpdump screen bmon htop atop lftp sysstat make \
+					build-essential libpcre3 libpcre3-dev libssl-dev \
+					zlib1g-dev vim wget tar gzip bash-completion \
+					ethstatus ifstat iftop iptraf host links2 \
+					libdate-manip-perl locate xvfb xfonts-base xfonts-75dpi \
+					xfonts-100dpi imagemagick
+}
+
+function install_php(){
+	info Installacja php
+	apt-get install -y php5-cgi php5-cli php5-pgsql php5-fpm php5-gd \
+					php5-sqlite php5-mcrypt php5-memcache php5-xcache \
+					php-pear php5-curl php5-intl
+}
+
+function pig_motd(){
+	info "Konfiguracja sieci"
+	ip a s
+	echo ""
+	info "Teraz pora na vagrant ssh i sudo su... chyba ze nie chcesz nic psuc.
+
+Maszyna standardowo ma adres 192.168.10.33. Jesli chcesz go zmienic to musisz edytowac Vagrantfile
+
+Milego dnia :)"
+
 }
 
 fix_box
 set_locale
-get_debian_version
-set_debian_repos
-set_pig_repos
+set_repos
+install_tools
+install_redis
+install_postgresql
+install_php
 
-apt-get update
+# Nie chcemy aby apt nas o coś pytał
 export DEBIAN_FRONTEND=noninteractive
-
-info Instaluje wymagane pakiety
-apt-get -y -t wheezy-backports install git
-apt-get install -y redis-server postgresql-9.3 
-
-info Instalacja narzedzi dodatkowych
-apt-get install -y tcpdump screen bmon htop atop lftp sysstat make build-essential libpcre3 libpcre3-dev libssl-dev zlib1g-dev vim wget tar gzip bash-completion ethstatus ifstat iftop iptraf host links2 libdate-manip-perl locate xvfb xfonts-base xfonts-75dpi xfonts-100dpi imagemagick 
-
-info Installacja php
-apt-get install -y php5-cgi php5-cli php5-pgsql php5-fpm php5-gd php5-sqlite php5-mcrypt php5-memcache php5-xcache php-pear php5-curl php5-intl
 
 info Instalacja nginx w nowszej wersji
 src/install_nginx.sh
@@ -133,11 +172,5 @@ src/install_wkhtml.sh
 
 info Nadgrywanie konfiguracji
 src/apply_etc.sh
-info "Konfiguracja sieci"
-ip a s
-echo ""
-info "Teraz pora na vagrant ssh i sudo su... chyba ze nie chcesz nic psuc.
 
-Maszyna standardowo ma adres 192.168.10.33. Jeśli chcesz do zmienić to musisz edytować Vagrantfile
-
-Miłego dnia :)"
+pig_motd
