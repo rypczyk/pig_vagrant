@@ -1,4 +1,5 @@
 #!/bin/bash
+
 echo "Nadgrywam konfigurację..."
 rsync -vr config/* /
 
