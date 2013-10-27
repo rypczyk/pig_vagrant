@@ -19,6 +19,7 @@ if [ $? -ne 0 ]
 		curl https://npmjs.org/install.sh | sh
 fi
 
+# To nienajlepsza metoda sprawdzania. 
 if [ ! -d ~/.npm/bower ]
 	then
 		npm install bower
