@@ -23,6 +23,7 @@ function set_locale(){
 function fix_box(){
   test -f /etc/apt/preferences && rm /etc/apt/preferences
   test -f /etc/apt/sources.list.d/grml.list && rm /etc/apt/sources.list.d/grml.list
+  test -f /etc/apt/sources.list.d/puppetlabs.list && rm /etc/apt/sources.list.d/puppetlabs.list
 }
 
 function get_debian_version(){
@@ -112,8 +113,12 @@ apt-get update
 export DEBIAN_FRONTEND=noninteractive
 
 info Instaluje wymagane pakiety
-apt-get -t wheezy-backports install git
-apt-get install -y redis-server postgresql-9.3 tcpdump screen bmon htop atop lftp sysstat make build-essential libpcre3 libpcre3-dev libssl-dev zlib1g-dev vim wget tar gzip bash-completion ethstatus ifstat iftop iptraf host links2 libdate-manip-perl locate xvfb xfonts-base xfonts-75dpi xfonts-100dpi imagemagick 
+apt-get -y -t wheezy-backports install git
+apt-get install -y redis-server postgresql-9.3 
+
+info Instalacja narzedzi dodatkowych
+apt-get install -y tcpdump screen bmon htop atop lftp sysstat make build-essential libpcre3 libpcre3-dev libssl-dev zlib1g-dev vim wget tar gzip bash-completion ethstatus ifstat iftop iptraf host links2 libdate-manip-perl locate xvfb xfonts-base xfonts-75dpi xfonts-100dpi imagemagick 
+
 info Installacja php
 apt-get install -y php5-cgi php5-cli php5-pgsql php5-fpm php5-gd php5-sqlite php5-mcrypt php5-memcache php5-xcache php-pear php5-curl php5-intl
 
@@ -122,7 +127,10 @@ src/install_nginx.sh
 
 info Instalacja nodejs
 src/install_nodejs.sh
-apt-get install -y wkhtmltopdf
+
+info Instalacja wkhtmltopdf
+src/install_wkhtml.sh
 
 info Nadgrywanie konfiguracji
 src/apply_etc.sh
+

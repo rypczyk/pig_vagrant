@@ -24,6 +24,6 @@ if [ $? -ne 0 ]
 fi
 cd $CACHE
 dpkg -i nginx-common_1*.deb nginx_1*.deb nginx-full_1*.deb
-mkdir /var/ngx_pagespeed_cache
+mkdir -p /var/ngx_pagespeed_cache
 chown -R www-data:www-data /var/ngx_pagespeed_cache
 

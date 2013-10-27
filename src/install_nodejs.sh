@@ -1,4 +1,4 @@
-node -v
+node -v >/dev/null 2>&1
 if [ $? -ne 0 ]
 	then
 		cd /usr/src/
@@ -11,6 +11,19 @@ if [ $? -ne 0 ]
 		cd node-v*
 		./configure && make && make install
 fi
-curl https://npmjs.org/install.sh | sh
-npm install bower
-npm install requirejs
+
+npm -v >/dev/null 2>&1
+if [ $? -ne 0 ]
+	then
+		echo "Instalacja npm..."
+		curl https://npmjs.org/install.sh | sh
+fi
+
+if [ ! -d ~/.npm/bower ]
+	then
+		npm install bower
+fi
+if [ ! -d ~/.npm/requirejs ]
+	then
+		npm install requirejs
+fi

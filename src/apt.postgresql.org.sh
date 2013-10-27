@@ -124,8 +124,8 @@ VPZ67j5UMxqtT/Y4+NHcQGgwF/1i
 -----END PGP PUBLIC KEY BLOCK-----
 EOF
 
-echo "Running apt-get update ..."
-apt-get update
+#echo "Running apt-get update ..."
+#apt-get update
 
 cat <<EOF
 
