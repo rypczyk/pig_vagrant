@@ -2,7 +2,7 @@
 DEBIAN_VERSION=0
 function info(){
 	echo "========="
-	echo $*
+	echo -e "$*"
 	echo "========="
 }
 function set_locale(){
@@ -133,4 +133,11 @@ src/install_wkhtml.sh
 
 info Nadgrywanie konfiguracji
 src/apply_etc.sh
+info "Konfiguracja sieci"
+ip a s
+echo ""
+info "Teraz pora na vagrant ssh i sudo su... chyba ze nie chcesz nic psuc.
 
+Maszyna standardowo ma adres 192.168.10.33. Jeśli chcesz do zmienić to musisz edytować Vagrantfile
+
+Miłego dnia :)"
