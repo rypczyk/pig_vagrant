@@ -1,13 +1,8 @@
 #!/bin/bash
-CACHE=/vagrant/cache
+CACHE=/vagrant/cache/$(arch)
 ARCH=$(arch)
 mkdir -p $CACHE
-if [ $ARCH = i686 ]
-	then
-		ARCH=i386
-fi
-
-/bin/ls -1 $CACHE|grep -q "nginx.*$ARCH.deb"
+/bin/ls -1 $CACHE|grep -q "nginx.*.deb"
 if [ $? -ne 0 ]
 	then
 		cd /usr/src
