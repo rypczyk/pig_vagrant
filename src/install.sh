@@ -89,12 +89,15 @@ function install_postgresql_repos(){
 
 function set_pig_repos(){
 	info "Instaluję repozytoria dla pig"
-	echo '
+	if [ "$PHP" = '5.5' ]	
+		then	
+			echo '
 deb http://packages.dotdeb.org wheezy-php55 all
 deb-src http://packages.dotdeb.org wheezy-php55 all
 ' > /etc/apt/sources.list.d/pigprint.list
-	gpg --keyserver keys.gnupg.net --recv-key 89DF5277
-	gpg -a --export 89DF5277 | sudo apt-key add -
+			gpg --keyserver keys.gnupg.net --recv-key 89DF5277
+			gpg -a --export 89DF5277 | sudo apt-key add -
+	fi
 	# Postgresql
 	install_postgresql_repos
 }
@@ -107,9 +110,17 @@ set_pig_repos
 
 apt-get update
 export DEBIAN_FRONTEND=noninteractive
-info Instaluje wymagane pakiety
 
+info Instaluje wymagane pakiety
 apt-get -t wheezy-backports install git
-apt-get install -y nginx redis-server postgresql-9.3
+apt-get install -y nginx redis-server postgresql-9.3 tcpdump screen bmon htop atop lftp sysstat make build-essential libpcre3 libpcre3-dev libssl-dev zlib1g-dev vim wget tar gzip bash-completion ethstatus ifstat iftop iptraf host links2 libdate-manip-perl locate xvfb xfonts-base xfonts-75dpi xfonts-100dpi imagemagick 
+info installacja php
+apt-get install -y php5-cgi php5-cli php5-pgsql php5-fpm php5-gd php5-sqlite php5-mcrypt php5-suhosin php5-memcache php5-xcache php-pear php5-curl php5-intl
+
 info Instalacja nginx w nowszej wersji
 src/install_nginx.sh
+
+info Instalacja nodejs
+src/install_nodejs.sh
+apt-get install -y wkhtmltopdf
+
