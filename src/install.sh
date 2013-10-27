@@ -115,7 +115,7 @@ info Instaluje wymagane pakiety
 apt-get -t wheezy-backports install git
 apt-get install -y nginx redis-server postgresql-9.3 tcpdump screen bmon htop atop lftp sysstat make build-essential libpcre3 libpcre3-dev libssl-dev zlib1g-dev vim wget tar gzip bash-completion ethstatus ifstat iftop iptraf host links2 libdate-manip-perl locate xvfb xfonts-base xfonts-75dpi xfonts-100dpi imagemagick 
 info installacja php
-apt-get install -y php5-cgi php5-cli php5-pgsql php5-fpm php5-gd php5-sqlite php5-mcrypt php5-suhosin php5-memcache php5-xcache php-pear php5-curl php5-intl
+apt-get install -y php5-cgi php5-cli php5-pgsql php5-fpm php5-gd php5-sqlite php5-mcrypt php5-memcache php5-xcache php-pear php5-curl php5-intl
 
 info Instalacja nginx w nowszej wersji
 src/install_nginx.sh
