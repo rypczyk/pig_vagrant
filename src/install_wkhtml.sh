@@ -5,14 +5,16 @@ function ver(){
 	wkhtmltopdf -V
 	wkhtmltoimage -V
 }
-cd /tmp
-apt-get install wkhtmltopdf
+apt-get -y install wkhtmltopdf
+
 # Jesli /usr/bin/wkhtmltoimage juz istnieje to pomijamy krok
 if [ -f /usr/bin/wkhtmltoimage ]
 	then
 		ver
 		exit 0
 fi
+
+cd /tmp
 if [ $(arch) = i686 ]
 	then
 		wget $WKH32 -O wkhtmltoimage32.tar.bz2
@@ -23,4 +25,5 @@ if [ $(arch) = i686 ]
 		tar -xvjf wkhtmltoimage64.tar.bz2
 		mv /tmp/wkhtmltoimage-amd64 /usr/bin/wkhtmltoimage
 fi
+
 ver
