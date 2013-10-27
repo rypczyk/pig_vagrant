@@ -66,9 +66,8 @@ EOF
 	;;
 esac
 
-echo -n "Press Enter to continue, or Ctrl-C to abort."
-
-read enter
+#echo -n "Press Enter to continue, or Ctrl-C to abort."
+#read enter
 
 echo "Writing /etc/apt/sources.list.d/pgdg.list ..."
 cat > /etc/apt/sources.list.d/pgdg.list <<EOF
