@@ -7,7 +7,7 @@ if [ $? -ne 0 ]
 	then
 		cd /usr/src
 		mkdir pagespeed && cd pagespeed
-		apt-get -y install dpkg-dev build-essential zlib1g-dev libpcre3 libpcre3-dev
+		apt-get -y install libxslt1.1 dpkg-dev build-essential zlib1g-dev libpcre3 libpcre3-dev
 		apt-get -y source nginx
 		apt-get -y build-dep nginx
 		cd nginx-*
