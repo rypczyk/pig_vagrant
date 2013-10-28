@@ -104,8 +104,12 @@ deb-src http://packages.dotdeb.org wheezy-php55 all
 function install_postgresql(){
 	info Instaluje postgresql 9.3
 	apt-get install -y postgresql-9.3
-	pg_dropcluster --stop 9.3 main 
-	pg_createcluster --start --locale pl_PL.UTF-8 9.3 main
+	su postgres -c "psql -l"|grep -q 'pl_PL.UTF-8'
+	if [ $? -ne 0 ]
+		then
+			pg_dropcluster --stop 9.3 main 
+			pg_createcluster --start --locale pl_PL.UTF-8 9.3 main
+	fi
 }
 
 function install_redis(){
