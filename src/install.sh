@@ -163,7 +163,7 @@ install_tools
 install_redis
 install_postgresql
 install_php
-install_cimposer
+install_composer
 # Nie chcemy aby apt nas o coś pytał
 export DEBIAN_FRONTEND=noninteractive
 
