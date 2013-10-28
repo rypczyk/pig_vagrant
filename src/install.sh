@@ -140,6 +140,10 @@ function install_php(){
 					php-pear php5-curl php5-intl
 }
 
+function install_composer(){
+	test -f /usr/local/bin/composer.phar || curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin/
+}
+
 function pig_motd(){
 	info "Konfiguracja sieci"
 	ip a s
@@ -159,7 +163,7 @@ install_tools
 install_redis
 install_postgresql
 install_php
-
+install_cimposer
 # Nie chcemy aby apt nas o coś pytał
 export DEBIAN_FRONTEND=noninteractive
 
