@@ -110,6 +110,22 @@ function install_postgresql(){
 			pg_dropcluster --stop 9.3 main 
 			pg_createcluster --start --locale pl_PL.UTF-8 9.3 main
 	fi
+	su postgres -c "psql -c \"SELECT 1 FROM pg_roles WHERE rolname='vagrant'\"" | grep -q '1 row'
+	if [ $? -ne 0 ]
+                then
+			info Tworze uzytkownika vagrant
+			su postgres -c "createuser vagrant"
+			info Ustawiam haslo vagrant dla uzytkownika vagrant	
+			su postgres -c "psql -c \"ALTER USER vagrant WITH PASSWORD 'vagrant'\""
+			
+        fi
+	su postgres -c "psql -l" | grep -q vagrant
+	if [ $? -ne 0 ]
+                then
+			info Tworze baze danych pigprint
+			su postgres -c  "createdb -O vagrant -E utf8 pigprint"
+	fi
+
 }
 
 function install_redis(){
